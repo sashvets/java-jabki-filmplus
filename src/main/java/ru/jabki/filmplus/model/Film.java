@@ -6,20 +6,27 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class Film {
-    private Long id;
-    private String name;
+    private final Long id;
+    private final String name;
     private String description;
-    private LocalDate releaseDate;
+    private final LocalDate releaseDate;
     private Integer duration;
     private Set<Genre> genres;
 
     private static final AtomicLong counter = new AtomicLong(0);
 
+    public Film(String name, String description, LocalDate releaseDate, Integer duration, Set<Genre> genres) {
+        this.id = counter.incrementAndGet();
+        this.name = name;
+        this.description = description;
+        this.releaseDate = releaseDate;
+        this.duration = duration;
+        this.genres = genres;
+    }
+
     public Film(Long id, String name, String description, LocalDate releaseDate, Integer duration, Set<Genre> genres) {
-        if (id != null) {
-            counter.accumulateAndGet(id, Math::max);
-            this.id = id;
-        }
+        this.id = id;
+        counter.accumulateAndGet(id, Math::max);
         this.name = name;
         this.description = description;
         this.releaseDate = releaseDate;
@@ -51,20 +58,8 @@ public class Film {
         return this.genres;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public void setReleaseDate(LocalDate releaseDate) {
-        this.releaseDate = releaseDate;
     }
 
     public void setDuration(Integer duration) {
@@ -73,10 +68,6 @@ public class Film {
 
     public void setGenres(Set<Genre> genres) {
         this.genres = genres;
-    }
-
-    public Long nextId() {
-        return counter.incrementAndGet();
     }
 
     @Override
@@ -97,9 +88,4 @@ public class Film {
         return Objects.hash(this.name.toLowerCase(), this.releaseDate, this.duration);
     }
 
-    @Override
-    public String toString() {
-        return String.format("Film{id=%d, name='%s', release=%s, duration=%d, genres=%s}",
-                this.id, this.name, this.releaseDate, this.duration, this.genres);
-    }
 }

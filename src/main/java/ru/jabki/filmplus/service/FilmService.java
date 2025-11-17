@@ -18,7 +18,6 @@ public class FilmService {
 
     public Film create(final Film film) {
         validate(film);
-        film.setId(film.nextId());
         films.add(film);
         return film;
     }
@@ -39,14 +38,10 @@ public class FilmService {
     }
 
     public Film update(final Film film) {
+        delete(film.getId());
         validate(film);
-        final Film existFilm = getById(film.getId());
-        existFilm.setName(film.getName());
-        existFilm.setDescription(film.getDescription());
-        existFilm.setDuration(film.getDuration());
-        existFilm.setReleaseDate(film.getReleaseDate());
-        existFilm.setGenres(film.getGenres());
-        return existFilm;
+        films.add(film);
+        return getById(film.getId());
     }
 
     public List<Film> search(final String name,
@@ -87,8 +82,11 @@ public class FilmService {
         if (film.getGenres() == null || film.getGenres().isEmpty() || film.getGenres().contains(null)) {
             throw new FilmException("Film genres is empty");
         }
-        if (films.contains(film)) {
+           if (films.contains(film)) {
             throw new FilmException("Film already exists");
         }
+    }
+    public static void clear() {
+        films.clear();
     }
 }

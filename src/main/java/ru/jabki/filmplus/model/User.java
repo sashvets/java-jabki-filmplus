@@ -5,19 +5,26 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class User {
-    private Long id;
+    private final Long id;
     private String name;
-    private String email;
-    private String login;
+    private final String email;
+    private final String login;
     private LocalDate birthday;
 
     private static final AtomicLong counter = new AtomicLong(0);
 
+    public User(String name, String email, String login, LocalDate birthday) {
+        this.id = counter.incrementAndGet();
+        counter.accumulateAndGet(id, Math::max);
+        this.name = name;
+        this.email = email;
+        this.login = login;
+        this.birthday = birthday;
+    }
+
     public User(Long id, String name, String email, String login, LocalDate birthday) {
-        if (id != null) {
-            counter.accumulateAndGet(id, Math::max);
-            this.id = id;
-        }
+        this.id = id;
+        counter.accumulateAndGet(id, Math::max);
         this.name = name;
         this.email = email;
         this.login = login;
@@ -44,28 +51,12 @@ public class User {
         return this.birthday;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void segLogin(String login) {
-        this.login = login;
-    }
-
-    public void segBirthday(LocalDate birthday) {
+    public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
-    }
-
-    public Long nextId() {
-        return counter.incrementAndGet();
     }
 
     @Override
@@ -83,11 +74,5 @@ public class User {
     @Override
     public int hashCode() {
         return Objects.hash(this.email.toLowerCase(), this.login.toLowerCase());
-    }
-
-    @Override
-    public String toString() {
-        return String.format("User{id=%d, name='%s', email='%s', login='%s', birthday=%s}",
-                this.id, this.name, this.email, this.login, this.birthday);
     }
 }

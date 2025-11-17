@@ -4,8 +4,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.jabki.filmplus.exception.FilmException;
+import ru.jabki.filmplus.exception.FriendshipException;
 import ru.jabki.filmplus.exception.GenreException;
+import ru.jabki.filmplus.exception.UserCommentException;
 import ru.jabki.filmplus.exception.UserException;
+import ru.jabki.filmplus.exception.UserLikeException;
 import ru.jabki.filmplus.model.ApiError;
 
 @RestControllerAdvice
@@ -36,6 +39,36 @@ public class ExceptionController {
                 .body(new ApiError(
                                 false,
                                 genreException.getMessage()
+                        )
+                );
+    }
+
+    @ExceptionHandler(FriendshipException.class)
+    public ResponseEntity<ApiError> handleFriendshipError(final FriendshipException friendshipException) {
+        return ResponseEntity.badRequest()
+                .body(new ApiError(
+                                false,
+                                friendshipException.getMessage()
+                        )
+                );
+    }
+
+    @ExceptionHandler(UserLikeException.class)
+    public ResponseEntity<ApiError> handleUserLikeError(final UserLikeException userLikeException) {
+        return ResponseEntity.badRequest()
+                .body(new ApiError(
+                                false,
+                                userLikeException.getMessage()
+                        )
+                );
+    }
+
+    @ExceptionHandler(UserCommentException.class)
+    public ResponseEntity<ApiError> handleUserCommentError(final UserCommentException userCommentException) {
+        return ResponseEntity.badRequest()
+                .body(new ApiError(
+                                false,
+                                userCommentException.getMessage()
                         )
                 );
     }
