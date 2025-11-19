@@ -10,23 +10,19 @@ public class Film {
     private final String name;
     private String description;
     private final LocalDate releaseDate;
-    private Integer duration;
+    private final Integer duration;
     private Set<Genre> genres;
 
     private static final AtomicLong counter = new AtomicLong(0);
 
-    public Film(String name, String description, LocalDate releaseDate, Integer duration, Set<Genre> genres) {
-        this.id = counter.incrementAndGet();
-        this.name = name;
-        this.description = description;
-        this.releaseDate = releaseDate;
-        this.duration = duration;
-        this.genres = genres;
-    }
 
     public Film(Long id, String name, String description, LocalDate releaseDate, Integer duration, Set<Genre> genres) {
-        this.id = id;
-        counter.accumulateAndGet(id, Math::max);
+        if (id == null) {
+            this.id = counter.incrementAndGet();
+        } else {
+            this.id = id;
+            counter.accumulateAndGet(id, Math::max);
+        }
         this.name = name;
         this.description = description;
         this.releaseDate = releaseDate;
@@ -60,10 +56,6 @@ public class Film {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public void setDuration(Integer duration) {
-        this.duration = duration;
     }
 
     public void setGenres(Set<Genre> genres) {

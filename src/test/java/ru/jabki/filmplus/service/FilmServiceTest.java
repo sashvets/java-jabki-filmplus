@@ -79,7 +79,7 @@ class FilmServiceTest {
         assertThrows(FilmException.class, () -> filmService.create(null));
         assertThrows(FilmException.class, () ->
                 filmService.create(
-                        new Film(
+                        new Film(null,
                                 "Грань будущего 2",
                                 "Без даты",
                                 null,
@@ -88,7 +88,7 @@ class FilmServiceTest {
                         )));
         assertThrows(FilmException.class, () ->
                 filmService.create(
-                        new Film("Грань будущего 2",
+                        new Film(null, "Грань будущего 2",
                                 "",
                                 LocalDate.of(2020, 1, 1),
                                 120,
@@ -96,7 +96,7 @@ class FilmServiceTest {
                         )));
         assertThrows(FilmException.class, () ->
                 filmService.create(
-                        new Film("Грань будущего 2",
+                        new Film(null, "Грань будущего 2",
                                 "Нулевая длительность",
                                 LocalDate.of(2020, 1, 1),
                                 0,
@@ -104,7 +104,7 @@ class FilmServiceTest {
                         )));
         assertThrows(FilmException.class, () ->
                 filmService.create(
-                        new Film("Начало",
+                        new Film(null, "Начало",
                                 "Фильм о снах и подсознании",
                                 LocalDate.of(2010, 7, 16),
                                 148,

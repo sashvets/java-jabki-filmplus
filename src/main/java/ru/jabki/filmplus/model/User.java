@@ -13,18 +13,13 @@ public class User {
 
     private static final AtomicLong counter = new AtomicLong(0);
 
-    public User(String name, String email, String login, LocalDate birthday) {
-        this.id = counter.incrementAndGet();
-        counter.accumulateAndGet(id, Math::max);
-        this.name = name;
-        this.email = email;
-        this.login = login;
-        this.birthday = birthday;
-    }
-
     public User(Long id, String name, String email, String login, LocalDate birthday) {
-        this.id = id;
-        counter.accumulateAndGet(id, Math::max);
+        if (id == null) {
+            this.id = counter.incrementAndGet();
+        } else {
+            this.id = id;
+            counter.accumulateAndGet(id, Math::max);
+        }
         this.name = name;
         this.email = email;
         this.login = login;

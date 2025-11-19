@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class UserComment {
-    private Long id;
+    private final Long id;
     private String commentText;
     private final Long filmId;
     private final Long userId;
@@ -15,23 +15,15 @@ public class UserComment {
     private static final AtomicLong counter = new AtomicLong(0);
 
     public UserComment(String commentText, Long filmId, Long userId) {
-        this.id = nextId();
+        this.id = counter.incrementAndGet();
         this.commentText = commentText;
         this.filmId = filmId;
         this.userId = userId;
         this.created = LocalDateTime.now();
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public Long getId() {
         return this.id;
-    }
-
-    private static Long nextId() {
-        return counter.incrementAndGet();
     }
 
     public String getCommentText() {
