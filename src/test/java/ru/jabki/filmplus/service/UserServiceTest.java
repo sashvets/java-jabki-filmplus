@@ -54,7 +54,7 @@ class UserServiceTest {
     void testCreateValidate() {
         assertThrows(UserException.class, () ->
                 userService.create(
-                        new User(
+                        new User(null,
                                 "Ильдар Исаков",
                                 "ildar.isakov@example.com",
                                 "ildarisakov",
@@ -65,6 +65,7 @@ class UserServiceTest {
         assertThrows(UserException.class, () ->
                 userService.create(
                         new User(null,
+                                null,
                                 "ilya.davydov@example.com",
                                 "ilyadavydov",
                                 LocalDate.of(1988, 3, 8)
@@ -72,7 +73,8 @@ class UserServiceTest {
         );
         assertThrows(UserException.class, () ->
                 userService.create(
-                        new User("Илья Давыдов",
+                        new User(null,
+                                "Илья Давыдов",
                                 null,
                                 "ilyadavydov",
                                 LocalDate.of(1988, 3, 8)
@@ -80,7 +82,8 @@ class UserServiceTest {
         );
         assertThrows(UserException.class, () ->
                 userService.create(
-                        new User("Илья Давыдов",
+                        new User(null,
+                                "Илья Давыдов",
                                 "ilya.davydov@example.com",
                                 null,
                                 LocalDate.of(1988, 3, 8)
@@ -88,7 +91,8 @@ class UserServiceTest {
         );
         assertThrows(UserException.class, () ->
                 userService.create(
-                        new User("Илья Давыдов",
+                        new User(null,
+                                "Илья Давыдов",
                                 "ilya.davydov@example.com",
                                 "ilyadavydov",
                                 null
@@ -96,7 +100,8 @@ class UserServiceTest {
         );
         assertThrows(UserException.class, () ->
                 userService.create(
-                        new User("Герман Давыдов",
+                        new User(null,
+                                "Герман Давыдов",
                                 "german.davydov@example.com",
                                 "germandavydov",
                                 LocalDate.of(2026, 3, 15)
@@ -104,7 +109,8 @@ class UserServiceTest {
         );
         assertThrows(UserException.class, () ->
                 userService.create(
-                        new User("Илья Давыдов",
+                        new User(null,
+                                "Илья Давыдов",
                                 "ilya.davydov@example.com",
                                 "ilyadavydov",
                                 LocalDate.of(2023, 3, 8)
@@ -112,7 +118,8 @@ class UserServiceTest {
         );
         assertThrows(UserException.class, () ->
                 userService.create(
-                        new User("Афоня Давыдов",
+                        new User(null,
+                                "Афоня Давыдов",
                                 "afonya.davydov@example.com",
                                 "fonyadavydov",
                                 LocalDate.of(1894, 3, 15)
@@ -144,11 +151,12 @@ class UserServiceTest {
         assertEquals("Азар Давыдов", user.getName());
         assertEquals("azar.davydov@example.com", user.getEmail());
         assertEquals(LocalDate.of(1988, 3, 8), user.getBirthday());
-        user = userService.update(new User(44L,
-                "Илья Давыдов",
-                "ilya.davydov@example.com",
-                "ilyadavydov",
-                LocalDate.of(1988, 3, 9)));
+        user = userService.update(
+                new User(44L,
+                        "Илья Давыдов",
+                        "ilya.davydov@example.com",
+                        "ilyadavydov",
+                        LocalDate.of(1988, 3, 9)));
     }
 
     @Test
